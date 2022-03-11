@@ -1,0 +1,38 @@
+name: Build
+on: 
+  pull_request:
+  push: 
+    branches:
+      - master
+
+jobs:
+  build-and-tests:
+    name: Build and tests
+    runs-on: ubuntu-latest
+    if: github.event.repository.name != 'adserver-provider-template'
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Setup node
+        uses: actions/setup-node@v1
+        with:
+          node-version: '12.x'
+
+      - name: 📦 Initialize
+        uses: Marfeel/github-actions/providers/adserver/initialize@master
+
+      - name: 🛠 Build
+        uses: Marfeel/github-actions/providers/adserver/build@master
+
+      - name: ✅ Tests
+        uses: Marfeel/github-actions/providers/adserver/test@master
+
+      - name: 🚀 Publish
+        if: github.event_name == 'push' && github.ref == 'refs/heads/master'
+        uses: Marfeel/github-actions/providers/adserver/publish@master
+        with:
+          gh-token: ${{ secrets.GH_PACKAGE_REGISTRY_TOKEN }}
+          nexus-token: ${{ secrets.NPM_NEXUS_AUTH }}
+          aws-secret: ${{ secrets.AWS_SECRET }}
+          aws-key: ${{ secrets.AWS_KEY }}

@@ -1,0 +1,56 @@
+{
+	"name": "@marfeel/adserver-providers-__adserver_name__",
+	"version": "1.0.0",
+	"description": "__description__",
+	"main": "dist/index.es2015.js",
+	"types": "dist/index.d.ts",
+	"author": "Marfeel",
+	"license": "ISC",
+	"scripts": {
+		"scaffold": "./node_modules/.bin/adserver-providers scaffold",
+		"build": "adserver-providers build",
+		"build:dev": "adserver-providers build:dev",
+		"test": "adserver-providers test:all",
+		"test:watch": "adserver-providers test:watch",
+		"lint": "adserver-providers lint",
+		"start": "adserver-providers playground:start"
+	},
+	"devDependencies": {
+		"@marfeel/adserver-providers-cli": "^1.0.8-snapshot.174.0"
+	},
+	"eslintConfig": {
+		"extends": [
+			"@marfeel/eslint-config-js",
+			"@marfeel/eslint-config-jest"
+		],
+		"env": {
+			"node": true
+		},
+		"overrides": [
+			{
+				"files": [
+					"**/*.ts"
+				],
+				"parserOptions": {
+					"project": "./extractor/tsconfig.json"
+				},
+				"extends": [
+					"@marfeel/eslint-config-js",
+					"@marfeel/eslint-config-jest",
+					"@marfeel/eslint-config-ts"
+				]
+			}
+		]
+	},
+	"publishConfig": {
+		"registry": "https://repositories.mrf.io/nexus/repository/npm-internal/"
+	},
+	"repository": {
+		"type": "git",
+		"url": "ssh://git@github.com:Marfeel/marfeel-releases.git"
+	},
+	"files": [
+		"dist/*",
+		"schema/*.json"
+	]
+}
